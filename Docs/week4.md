@@ -69,4 +69,25 @@ SSH logged in without a password, confirming key-based authentication worked.
 
 ## 2. Configure a firewall permitting SSH from one specific workstation only
 
+The goal of this task was to secure the Ubuntu Server VM by allowing SSH access **only** from my workstation.  
+This prevents any other device or network from accessing the server remotely.
+
+---
+
+### 2.1 Identify Workstation IP Address
+
+On my Windows machine, I used the following command to check my VirtualBox Host-Only Adapter IP:
+
+```
+ipconfig
+```
+
+I renamed the adapter so that it would be easy for me to find it.
+
+```
+IPV4 Address: 192.168.56.1
+```
+
+This is the only IP allowed to access SSH.
+
 
