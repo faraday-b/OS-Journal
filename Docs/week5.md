@@ -7,4 +7,8 @@
 | Warnings Found  |             |
 | Suggestions Made |
 
+For your journal: Complete audit summary table. List the 10 most critical warnings
+identified by Lynis with explanations of what each means
+
 <img width="960" height="1080" alt="image" src="https://github.com/user-attachments/assets/1314d4a2-7e42-4c25-8f79-53d79fea8ef3" />
+
