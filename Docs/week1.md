@@ -13,30 +13,17 @@ I chose Option B because my laptop only has 8GB of RAM and Ubuntu on it's own us
 
 ## 4. Network configuration
 
-Adapter 1
-
+VirtualBox Adapter 1:
 <img width="699" height="382" alt="image" src="https://github.com/user-attachments/assets/4eb131e7-fbe4-4764-be28-797d85486cff" />
 
-Adapter 2
-
+VirtualBox Adapter 2:
 <img width="698" height="372" alt="image" src="https://github.com/user-attachments/assets/92b3abab-cf9e-4ad2-be4f-38b3fca69fb7" />
 
-
-Server System IP Address
-
+VirtualBox IP Address: 
 <img width="1223" height="137" alt="image" src="https://github.com/user-attachments/assets/0294af88-783d-4dfc-8a2f-48526e83644c" />
 
-```
-ip addr
-```
-
-Workstation IP Address
-
+Workstation IP Address:
 <img width="821" height="173" alt="image" src="https://github.com/user-attachments/assets/8d73d3e5-7c52-4410-8a6a-566483339ee1" />
-
-```
-ipconfig
-```
 
 ## 5. CLI system specifications
 
@@ -64,10 +51,8 @@ df -h
 ip addr
 ```
 
-
-
 <img width="391" height="47" alt="image" src="https://github.com/user-attachments/assets/64a16178-96ca-4beb-ac78-d5c2f17029a0" />
 
 ```
-ip addr
+lsb_release
 ```
