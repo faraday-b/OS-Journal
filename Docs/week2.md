@@ -1,40 +1,73 @@
-<!DOCTYPE html>
-
 # Security Planning and Testing Methodology
 
-## 1. Performance Testing Plan
+## Task 1: Performance Testing Plan
 
-The Performance Testing Plan defines the methodology for remotely evaluating the server's resource utilization and performance under controlled conditions. This plan is divided into three sections: Remote Monitoring Methodology, Baseline Performance Testing, and Application Load Testing.
+### 1. Remote Monitoring Methodology
+The Ubuntu server is a headless system with no graphical interface. This means that all performance monitoring must be conducted remotely from the workstation (my laptop) using an SSH connection. This prevents monitoring tools from consuming the server's limited resources.
 
-### 1.1 Remote Monitoring Methodology
+* **Primary tool:** I will use `htop` for real time visualisation of CPU and RAM usage.
+* **Data collection:** I will use `vmstat` and `iostat` to capture raw data into text files on the workstation for later analysis.
+* **Metric focus:** I will prioritise tracking memory usage as my laptop only has 8GB of RAM.
 
-Since the server is configured as a headless system and all administration is conducted via SSH from the workstation, all performance data collection must be performed remotely.
+---
 
-* **Primary Tool:** A custom remote monitoring script, `monitor-server.sh`, will be developed and executed from the **workstation**. This script will establish an SSH connection to the server, execute the necessary performance commands, and collect the output for storage and analysis on the workstation.
-* **Performance Metrics:** The script will be designed to collect data for all required metrics: CPU usage, Memory usage, Disk I/O performance, Network performance, System latency, and Service response times.
-* **CLI Tools:** Standard Linux command-line utilities will be used to gather raw data directly from the server's kernel, including:
-    * `vmstat` (Virtual Memory Statistics) for CPU and Memory.
-    * `iostat` (Input/Output Statistics) for Disk I/O performance.
-    * `netstat` or `ss` for network connection status.
-    * `ping` or `iperf3` for network latency and throughput analysis.
-* **Data Handling:** The collected data will be captured in a structured format (e.g., CSV or a simple data table) for subsequent processing. This data will be used in Phase 6 to create performance data tables and visualisations (charts/graphs).
+### 2. Baseline Performance Testing
+The baseline test establishes how the server performs in its "natural" state before any applications or security hardening are applied. This acts as the control group for the project.
 
-### 1.2 Baseline Performance Testing Approach
+* **Procedure:** I will boot the server and allow it to run in an idle state for 10 minutes.
+* **Monitoring:** I will record the "resting" RAM consumption and CPU percentage every 60 seconds.
+* **Goal:** To determine the minimum resource overhead required to keep the OS running.
 
-Baseline testing is required to establish a control set of data, identifying the server's native resource consumption when running only essential operating system services in an idle state.
+---
 
-* **Purpose:** To measure the minimum CPU, RAM, and disk activity required for the Ubuntu server to function without any added application load. This acts as the **control group** for comparison against load testing.
-* **Methodology:**
-    1.  Ensure all non-essential services and applications are stopped.
-    2.  Run the `monitor-server.sh` script over a defined period (e.g., 5-10 minutes) to capture average idle statistics.
-* **Key Metrics:** Focus on CPU idle percentage, free memory capacity, and average disk I/O wait times.
+### 3. Application Load Testing
+Load testing evaluates how the system behaves under the stress of the applications I will choose in Phase 3. This is critical to ensure the 8GB RAM on my laptop can handle the workload.
 
-### 1.3 Application Load Testing Approach
+* **Simulated Stress:** I will use the `stress-ng` utility to manually push the CPU to 50% and 80% capacity.
+* **I/O Testing:** I will perform a large file transfer between the workstation and the server using `scp` to measure disk write speeds.
+* **Success Criteria:** The server must remain responsive via SSH even under 80% load.
 
-Load testing evaluates the system's performance and behavior under the stress of the chosen applications (which will be defined in Phase 3).
+---
 
-* **Purpose:** To identify performance bottlenecks and system limitations when the server is operating under heavy workload, corresponding to CPU-, RAM-, I/O-, and Network-intensive scenarios.
-* **Methodology:**
-    1.  For each application selected in Phase 3, a specific load will be applied (e.g., running `stress-ng`, initiating a large file transfer, or simulating multiple concurrent server requests).
-    2.  The `monitor-server.sh` script will be executed simultaneously to continuously capture performance data while the load is active.
-* **Analysis:** The data collected during load testing will be compared directly against the baseline data to quantify the resource impact of each application workload. This comparison will facilitate performance analysis and the identification of optimisation opportunities for Phase 6.
+## Task 2: Security Configuration Checklist
+
+### 1. Access Control and Authentication
+* **Implement SSH Key-Pair Authentication:** Disable password-based logins to ensure only the workstation with the private key can access the server.
+* **Disable Root Login:** Modify the SSH configuration to prevent direct root access.
+* **Limit User Privileges:** Audit user groups to ensure the "least privilege" principle is applied.
+
+### 2. Network Security and Firewall
+* **Enable UFW (Uncomplicated Firewall):** Set a global "Deny" policy for all incoming traffic.
+* **Port Restricting:** Only open the specific custom port required for SSH management.
+* **IP Whitelisting:** Configure the firewall to specifically allow traffic only from the workstation's IP.
+
+### 3. Intrusion Prevention and System Integrity
+* **Install and Configure Fail2ban:** Set up automated monitoring of logs to ban brute-force behavior.
+* **Enable Unattended Upgrades:** Configure the system to automatically install security patches.
+* **AppArmor Profile Verification:** Ensure Mandatory Access Control (MAC) profiles are active.
+
+### 4. Logging and Auditing
+* **Centralized Log Review:** Establish a schedule for reviewing `auth.log` and `syslog`.
+* **System Integrity Checks:** Use tools to verify that system binaries have not been tampered with.
+
+---
+
+## Task 3: Threat Model
+
+### 1. Threat Identification Matrix
+
+| Threat | CIA Triad Focus | Mitigation Strategy |
+| :--- | :--- | :--- |
+| **Brute-Force SSH Attacks** | Confidentiality | Disable password authentication and enforce SSH Key-Pairs. |
+| **Unauthorized Privilege Escalation** | Integrity | Lock the root account and use a non-root user with sudo privileges. |
+| **Service Downtime (DoS)** | Availability | Configure Fail2ban to ban malicious IPs and use UFW to limit traffic. |
+
+---
+
+### 2. Mitigation Justification
+
+* **Confidentiality:** Since my server uses a Host-Only network, it is primarily at risk from devices on my local network. By disabling passwords, I ensure that even if an attacker knows my username, they cannot gain access without my unique physical private key.
+
+* **Integrity:** To ensure the system remains untampered, I will disable direct root logins. This forces any administrative action to be logged through a specific user account, providing an audit trail of changes.
+
+* **Availability:** With only 8GB of RAM on my host machine, the VM is vulnerable to resource exhaustion. Using Fail2ban ensures that the system automatically drops connections from aggressive sources before they consume enough memory to crash the server.
