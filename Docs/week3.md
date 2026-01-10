@@ -69,6 +69,9 @@ All monitoring is performed via SSH to adhere to project constraints [1]. I am u
 ### Phase 3 Conclusion
 The applications were successfully installed and baseline metrics recorded. This data proves the Ubuntu server is a stable, optimized environment ready for the Phase 4 security implementation.
 
+
+By selecting Nginx and MariaDB, I have successfully minimized the system's idle resource footprint to just 1.2Gi of RAM. This deliberate choice to maintain a lightweight environment aligns with the sustainability goals of reducing data center energy demand as discussed by Masanet et al. [5]. Keeping the OS lean ensures that hardware resources are not wasted on unnecessary background processes, thereby optimizing the overall energy efficiency of the virtualized environment.
+
 ---
 
 ## References
@@ -88,9 +91,8 @@ The applications were successfully installed and baseline metrics recorded. This
 In accordance with university guidance, I acknowledge the use of Gemini (Large Language Model) in developing this journal.
 
 **Nature of AI Use:**
-* **Technical Guidance:** Support with command syntax for `systemctl` and `ps aux`.
-* **Formatting:** Assistance in structuring Markdown tables and the IEEE reference list.
-* **Analysis:** Support in interpreting the "Available" vs "Used" RAM metrics in the Linux kernel.
+* **Technical Guidance:** Support with command syntax for `ps aux`.
+* **Formatting:** Assistance in structuring Markdown tables
 
 **Student Verification:**
 All terminal commands were manually executed by me via SSH on the Ubuntu Server VM. All screenshots and quantitative data represent my own primary implementation and verification work.
