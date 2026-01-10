@@ -120,7 +120,7 @@ This prevents any other device or network from accessing the server remotely.
 
 ### 4.1 Identify Workstation IP Address
 
-On my workstation, I used ```ip config``` to check my VirtualBox Host-Only Adapter IP
+On my workstation, I used ```ipconfig``` to check my VirtualBox Host-Only Adapter IP
 
 <img width="823" height="286" alt="image" src="https://github.com/user-attachments/assets/5af98441-63c1-402a-9941-e201cadeca87" />
 
@@ -170,8 +170,6 @@ By filtering unauthorized traffic at the firewall level, the system saves CPU cy
 
 ## 6. Conclusion
 Phase 4 successfully transitioned the server from a default, vulnerable state to a hardened configuration. By disabling password authentication and restricting network access to a single trusted IP, the attack surface has been minimized. The server is now ready for final demonstration.
-
----
 
 ---
 
