@@ -111,26 +111,62 @@ sudo sshd -T | grep -E "passwordauthentication|permitrootlogin"
 
 <img width="1019" height="91" alt="image" src="https://github.com/user-attachments/assets/91aaabf3-85c7-46b6-94fd-233ed425559c" />
 
+---
 
 ## 4. Configure a firewall permitting SSH from one specific workstation only
 
 The goal of this task was to secure the Ubuntu Server VM by allowing SSH access **only** from my workstation.  
 This prevents any other device or network from accessing the server remotely.
 
----
-
 ### 4.1 Identify Workstation IP Address
 
-On my Windows machine, I used the following command to check my VirtualBox Host-Only Adapter IP:
+On my workstation, I used ```ip config``` to check my VirtualBox Host-Only Adapter IP
 
-```
-ipconfig
-```
+<img width="823" height="286" alt="image" src="https://github.com/user-attachments/assets/5af98441-63c1-402a-9941-e201cadeca87" />
 
 I renamed the adapter so that it would be easy for me to find it.
 
+This is the only IP allowed to access SSH.
+
+### 4.2 Implementation & Ruleset
+
+I configured the Uncomplicated Firewall (UFW) with a "Default Deny" incoming policy. I then created specific exceptions to allow administrative access from my workstation and public access to the web services established in Phase 3.
+
+| Rule Name | Action | From (Source) | Port / Protocol | Purpose |
+| :--- | :--- | :--- | :--- | :--- |
+| **SSH Management** | `ALLOW` | `192.168.56.1` | `22/tcp` | Restricts remote management to my specific workstation IP only. |
+| **Nginx Full** | `ALLOW` | `Anywhere` | `80, 443/tcp` | Permits HTTP and HTTPS traffic for the web server to be public. |
+| **Default Deny** | `DENY` | `Anywhere` | `All Ports` | Ensures any traffic not explicitly allowed is blocked by default. |
+
+**Commands executed:**
 ```
-IPV4 Address: 192.168.56.1
+sudo ufw default deny incoming
+sudo ufw allow from 192.168.56.1 to any port 22
+sudo ufw allow 'Nginx Full'
+sudo ufw enable
 ```
 
-This is the only IP allowed to access SSH.
+### 4.3 Verification of Active Security
+
+To confirm the firewall was correctly filtering traffic, I queried the status of the UFW service to ensure the rules were applied to the running system.
+
+```
+sudo ufw status verbose
+```
+
+<img width="742" height="306" alt="image" src="https://github.com/user-attachments/assets/2715091e-f67c-40e7-ae9d-5bd30580b4e4" />
+
+---
+
+## 5. Technical Reflection
+
+### 5.1 Security vs. Usability
+Implementing these controls creates a "Zero Trust" environment. While it significantly increases security, it introduces a "lockout risk" if the private key is lost or the workstation IP changes. In professional practice, this is balanced by using redundant backup keys or secure console access.
+
+### 5.2 Sustainability Link
+By filtering unauthorized traffic at the firewall level, the system saves CPU cycles that would otherwise be spent processing thousands of failed bot-login attempts. This reduces the energy consumption of the VM, supporting the efficiency goals mentioned in the Masanet et al. [5] study.
+
+---
+
+## 6. Conclusion
+Phase 4 successfully transitioned the server from a default, vulnerable state to a hardened configuration. By disabling password authentication and restricting network access to a single trusted IP, the attack surface has been minimized. The server is now ready for final demonstration.
