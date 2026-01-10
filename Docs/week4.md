@@ -164,9 +164,20 @@ sudo ufw status verbose
 Implementing these controls creates a "Zero Trust" environment. While it significantly increases security, it introduces a "lockout risk" if the private key is lost or the workstation IP changes. In professional practice, this is balanced by using redundant backup keys or secure console access.
 
 ### 5.2 Sustainability Link
-By filtering unauthorized traffic at the firewall level, the system saves CPU cycles that would otherwise be spent processing thousands of failed bot-login attempts. This reduces the energy consumption of the VM, supporting the efficiency goals mentioned in the Masanet et al. [5] study.
+By filtering unauthorized traffic at the firewall level, the system saves CPU cycles that would otherwise be spent processing thousands of failed bot-login attempts. This reduces the energy consumption of the VM, supporting the efficiency goals mentioned in the Masanet et al. [3] study.
 
 ---
 
 ## 6. Conclusion
 Phase 4 successfully transitioned the server from a default, vulnerable state to a hardened configuration. By disabling password authentication and restricting network access to a single trusted IP, the attack surface has been minimized. The server is now ready for final demonstration.
+
+---
+
+---
+
+## References
+
+1. **Masanet, E., Shehabi, A., Ramakrishnan, L., Liang, J., Fan, X., Lei, Z., & Koomey, J. (2020).** *Recalibrating global data center energy-use estimates.* Science, 367(6481), 984-986. [Online]. Available: https://doi.org/10.1126/science.aba3758 (Accessed 10 Jan 2026).
+2. **Canonical Group.** (2024). *Ubuntu Server Documentation: Security - Firewall Configuration (UFW).* [Online]. Available: https://ubuntu.com/server/docs/security-firewalls (Accessed 10 Jan 2026).
+3. **DigitalOcean Community.** (2023). *SSH Essentials: Working with SSH Servers, Clients, and Keys.* [Online]. Available: https://www.digitalocean.com/community/tutorials/ssh-essentials-working-with-ssh-servers-clients-and-keys (Accessed 10 Jan 2026).
+4. **NIST (National Institute of Standards and Technology).** (2008). *Guide to General Server Security (Special Publication 800-123).* [Online]. Available: https://csrc.nist.gov/publications/detail/sp/800-123/final (Accessed 10 Jan 2026).
