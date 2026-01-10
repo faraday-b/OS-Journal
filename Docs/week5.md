@@ -1,11 +1,12 @@
-# Advanced Security and Monitoring Infrastructure
+# Phase 5: Advanced Security and Monitoring Infrastructure
 
-| Metric | Initial Value |
-| ------------- |:-------------:|
-| Hardening Index | 59          |
-| Tests Performed | 253         |
-| Warnings Found  |             |
-| Suggestions Made |
+| Metric           | Initial Value |
+| ---------------- | :-----------: |
+| Hardening Index  |      59       |
+| Tests Performed  |      253      |
+| Warnings Found   |       2       |
+| Suggestions Made |      39       |
+
 
 For your journal: Complete audit summary table. List the 10 most critical warnings
 identified by Lynis with explanations of what each means
