@@ -25,7 +25,6 @@ sudo usermod -aG sudo benedict
 
 <img width="628" height="69" alt="image" src="https://github.com/user-attachments/assets/171fd7b1-f5b6-42a9-8862-b67be5a060ab" />
 
-
 ---
 
 ## 2. Configure SSH with key-based authentication
@@ -110,6 +109,9 @@ I used the following command to verify the active configuration:
 sudo sshd -T | grep -E "passwordauthentication|permitrootlogin"
 ```
 
+<img width="1019" height="91" alt="image" src="https://github.com/user-attachments/assets/91aaabf3-85c7-46b6-94fd-233ed425559c" />
+
+
 ## 4. Configure a firewall permitting SSH from one specific workstation only
 
 The goal of this task was to secure the Ubuntu Server VM by allowing SSH access **only** from my workstation.  
@@ -117,7 +119,7 @@ This prevents any other device or network from accessing the server remotely.
 
 ---
 
-### 3.1 Identify Workstation IP Address
+### 4.1 Identify Workstation IP Address
 
 On my Windows machine, I used the following command to check my VirtualBox Host-Only Adapter IP:
 
@@ -132,5 +134,3 @@ IPV4 Address: 192.168.56.1
 ```
 
 This is the only IP allowed to access SSH.
-
-
