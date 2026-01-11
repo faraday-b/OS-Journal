@@ -6,11 +6,11 @@
 
 ## 2. Distribution selection justification
 
-I chose Ubuntu over the other distributions because when I tried to install Fedora, it did not run smoothly on my laptop despite making adjustments to the settings. Ubuntu runs smoothly on my laptop and does not give me any issues.
+I chose Ubuntu over the other distributions because when I tried to install Fedora, it did not run smoothly on my laptop despite making adjustments to the settings. Beyond performance, Ubuntu 24.04 LTS was selected for its long-term support (LTS) lifecycle and the robust apt package management system, which is ideal for a stable server environment.
 
 ## 3. Workstation configuration decision
 
-I chose Option B because my laptop only has 8GB of RAM and Ubuntu on it's own uses 4GB. So I came to the conclusion that running 2 virtual machines at the same time wouldn't be a good idea.
+By choosing Option B, I am leveraging the host machine as the workstation. This preserves hardware resources (CPU/RAM) for the server VM, ensuring high availability and preventing system instability during the hardening phases.
 
 ## 4. Network Configuration
 
