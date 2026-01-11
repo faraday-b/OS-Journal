@@ -1,4 +1,4 @@
-# Phasee 4: Initial System Configuration & Security Implementation
+# Phase 4: Initial System Configuration & Security Implementation
 
 ## Introduction
 
