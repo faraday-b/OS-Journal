@@ -2,4 +2,4 @@
 
 Click the link below to view the full journal and weekly logs:
 
-[View Technical Journal (index.md)](./Docs/index.md)
+[Link](./Docs/index.md)
