@@ -1,5 +1,11 @@
 # Phase 3: Application Selection for Performance Testing
 
+## Introduction
+
+The objective of Phase 3 is to transition the hardened Ubuntu 24.04 server from a base installation to a functional application environment. This phase focuses on selecting, installing, and baselining services that represent real-world server workloads. By deploying a web server and a database, we can evaluate the system's performance and resource efficiency. This functional baseline is critical for understanding the performance impact of the security configurations and monitoring strategies implemented in subsequent phases.
+
+---
+
 ## 1. Selected Services
 
 I have selected the following lightweight services to ensure the server remains stable on my host machine while meeting the functional requirements of the project:
@@ -13,7 +19,7 @@ I have selected the following lightweight services to ensure the server remains 
 
 ### Why these applications?
 
-The primary goal is to simulate a functional web environment without causing "swapping" on the host laptop, which can lead to significant performance degradation. Nginx and MariaDB are industry standards that are highly compatible with the **UFW** and **Fail2ban** security measures planned for Phase 4 [1].
+The primary goal is to simulate a functional web environment without causing "swapping" on the host laptop, which can lead to significant performance degradation. Nginx and MariaDB are industry standards that are highly compatible with the **UFW** and **Fail2ban** security measures planned for Phase 4.
 
 ### Resource Allocation Table
 
@@ -32,7 +38,7 @@ I utilized the `apt` package manager to install these services via SSH. To keep 
 
 1. **Core Installation:** Installed only essential packages to reduce disk footprint and potential attack vectors.
 2. **Service Management:** Verified the services were running using `systemctl` to ensure they were correctly integrated with the OS.
-3. **Remote Administration:** Performed all tasks via SSH to simulate real-world server management [1].
+3. **Remote Administration:** Performed all tasks via SSH to simulate real-world server management.
 
 ---
 
@@ -52,18 +58,20 @@ The database server was installed to provide back-end functionality. It is curre
 
 <img width="924" alt="MariaDB Status Evidence" src="https://github.com/user-attachments/assets/02c3bfbe-39f2-413c-bcc5-67f2bef29002" />
 
-### 4.3 Monitoring Strategy & Performance Baseline
+---
 
-To conclude Phase 3, I established a resource consumption baseline. This satisfies the requirement for a monitoring strategy by explaining the measurement approach used to evaluate system health before security hardening [1].
+## 5. Monitoring Strategy & Performance Baseline
 
-#### Measurement Approach
+To conclude Phase 3, I established a resource consumption baseline. This satisfies the requirement for a monitoring strategy by explaining the measurement approach used to evaluate system health before security hardening.
 
-All monitoring is performed via SSH to adhere to project constraints [1]. I am using a dual-layered approach:
+### Measurement Approach
+
+All monitoring is performed via SSH to adhere to project constraints. I am using a dual-layered approach:
 
 - **System-Level:** Utilizing `free -h` to monitor total RAM and Swap usage to prevent host machine instability.
-- **Process-Level:** Utilizing `ps aux` and `systemctl status` to isolate the specific footprint of Nginx and MariaDB.
+- **Process-Level:** Utilizing `ps aux --sort=-%mem` and `systemctl status` to isolate the specific footprint of Nginx and MariaDB.
 
-#### Baseline Evidence Table
+### Baseline Evidence Table
 
 | Metric             | CLI Command                        | Evidence                                                                                                                       | Result                                                   |
 | :----------------- | :--------------------------------- | :----------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------- |
@@ -74,13 +82,13 @@ All monitoring is performed via SSH to adhere to project constraints [1]. I am u
 
 ---
 
-#### Technical Reflection & Trade-off Analysis
+## 6. Technical Reflection & Trade-off Analysis
 
 - **Quantitative Success:** The total memory usage of **1.2Gi** aligns with the project's sustainability goals by minimizing resource waste on the host machine.
-- **Performance Buffer:** With **2.5Gi of RAM available**, there is significant overhead to implement the mandatory security controls in Phase 4 without risking performance bottlenecks [1].
+- **Performance Buffer:** With **2.5Gi of RAM available**, there is significant overhead to implement the mandatory security controls in Phase 4 without risking performance bottlenecks.
 
 ### Phase 3 Conclusion
 
 The applications were successfully installed and baseline metrics recorded. This data proves the Ubuntu server is a stable, optimized environment ready for the Phase 4 security implementation.
 
-By selecting Nginx and MariaDB, I have successfully minimized the system's idle resource footprint to just 1.2Gi of RAM. This deliberate choice to maintain a lightweight environment aligns with the sustainability goals of reducing data center energy demand as discussed by Masanet et al. [5]. Keeping the OS lean ensures that hardware resources are not wasted on unnecessary background processes, thereby optimizing the overall energy efficiency of the virtualized environment.
+By selecting Nginx and MariaDB, I have successfully minimized the system's idle resource footprint to just 1.2Gi of RAM. This deliberate choice to maintain a lightweight environment aligns with the sustainability goals of reducing data center energy demand. Keeping the OS lean ensures that hardware resources are not wasted on unnecessary background processes, thereby optimizing the overall energy efficiency of the virtualized environment.
